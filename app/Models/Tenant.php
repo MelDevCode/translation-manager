@@ -20,7 +20,17 @@ class Tenant extends Model
     public function users() {
         return $this->belongsToMany(User::class);
     }
-     
+
+    public function tenantUsers(): HasMany
+    {
+        return $this->hasMany(TenantUser::class);
+    }
+
+    public function clients(): HasMany
+    {
+        return $this->hasMany(Client::class);
+    }
+
 }
 
         

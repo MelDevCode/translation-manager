@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\TenantUser;
+use App\Models\Client;
 
 class ApplyTenantScopes
 {

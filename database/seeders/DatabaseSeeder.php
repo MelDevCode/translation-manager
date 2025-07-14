@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Tenant;
+use App\Models\Client;
 
 class DatabaseSeeder extends Seeder
 {
@@ -65,5 +66,24 @@ class DatabaseSeeder extends Seeder
         $mafuyu->tenants()->attach([$tenant1->id, $tenant2->id, $tenant3->id]);
         $ritsuka->tenants()->attach([$tenant1->id, $tenant2->id]);
         $shumei->tenants()->attach([$tenant2->id, $tenant3->id]);
+
+        // Create clients
+        Client::create([
+            'tenant_id' => $tenant1->id,
+            'name' => 'Yuji Itadori',
+            'email' => 'yuji@jujutsu-kaisen.com',
+            'company_name' => 'Jujutsu Kaisen Company',
+            'phone' => '123-456-7890',
+            'notes' => 'Special grade sorcerer.',
+        ]);
+
+        Client::create([
+            'tenant_id' => $tenant2->id,
+            'name' => 'Levi Ackerman',
+            'email' => 'levi@snk.com',
+            'company_name' => 'Shingeki no Kyojin',
+            'phone' => '987-654-3210',
+            'notes' => 'Captain of the Survey Corps.',
+        ]);
     }
 }

@@ -15,7 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->enum('role', ['admin', 'translator', 'editor', 'interpreter', 'project_manager'])->default('user');
+            $table->enum('role', ['admin', 'translator', 'editor', 'interpreter', 'proofreader', 'project_manager'])->default('translator');
+            $table->json('language_pairs')->nullable(); // e.g. ["EN→ES", "FR→DE"]
+            $table->enum('availability_status', [
+                'available',
+                'unavailable'
+            ])->default('available');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

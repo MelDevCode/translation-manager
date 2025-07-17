@@ -45,6 +45,11 @@ class Tenant extends Model
     {
         return $this->hasMany(Glossary::class);
     }
+
+    public function terms(): HasMany
+    {
+        return $this->hasMany(Term::class);
+    }
 }
 
         

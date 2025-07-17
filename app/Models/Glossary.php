@@ -15,10 +15,10 @@ class Glossary extends Model
         'target_language',
     ];
     
-    // public function terms(): HasMany
-    // {
-    //     return $this->hasMany(GlossaryTerm::class);
-    // }
+    public function terms(): HasMany
+    {
+        return $this->hasMany(GlossaryTerm::class);
+    }
 
     public function projects(): BelongsToMany
     {

@@ -50,6 +50,11 @@ class Tenant extends Model
     {
         return $this->hasMany(Term::class);
     }
+
+    public function assignments(): HasMany
+    {
+        return $this->hasMany(Assignment::class);
+    }
 }
 
         

@@ -17,7 +17,9 @@ class GlossaryResource extends Resource
 {
     protected static ?string $model = Glossary::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-book-open';
+
+    protected static ?string $navigationGroup = 'Language Resources';
 
     public static function form(Form $form): Form
     {
@@ -79,6 +81,7 @@ class GlossaryResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

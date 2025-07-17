@@ -40,6 +40,11 @@ class Tenant extends Model
     {
         return $this->hasMany(File::class);
     }
+    
+    public function glossaries(): HasMany
+    {
+        return $this->hasMany(Glossary::class);
+    }
 }
 
         

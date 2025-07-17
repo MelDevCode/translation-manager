@@ -30,12 +30,13 @@ class ProjectResource extends Resource
                 ->preload()
                 ->required(),
                 Forms\Components\TextInput::make('name')
+                    ->label('Project Name')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Select::make('status')
                     ->required()
                     ->options([
-                        'pending' => 'Pending',
+                        'not_started' => 'Not Started',
                         'in_progress' => 'In Progress',
                         'completed' => 'Completed',
                         'cancelled' => 'Cancelled',
@@ -51,6 +52,7 @@ class ProjectResource extends Resource
                 Forms\Components\Textarea::make('instructions')
                     ->maxLength(65535),
                 Forms\Components\Select::make('created_by')
+                    ->label('Created By')
                     ->required()
                     ->relationship('user', 'name'),
             ]);

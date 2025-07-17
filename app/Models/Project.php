@@ -38,6 +38,10 @@ class Project extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
+    public function files() {
+        return $this->hasMany(File::class);
+    }
+
     protected static function booted(): void
     {
         static::addGlobalScope('tenant', function (Builder $query) {

@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Tenant;
 use App\Models\Client;
+use App\Models\Project;
 
 class DatabaseSeeder extends Seeder
 {
@@ -84,6 +84,46 @@ class DatabaseSeeder extends Seeder
             'company_name' => 'Shingeki no Kyojin',
             'phone' => '987-654-3210',
             'notes' => 'Captain of the Survey Corps.',
+        ]);
+
+        // Get some existing clients and users for seeding
+        $client1 = Client::where('name', 'Yuji Itadori')->first();
+        $client2 = Client::where('name', 'Levi Ackerman')->first();
+
+        Project::create([
+            'tenant_id' => $tenant1->id,
+            'client_id' => $client1->id,
+            'created_by' => $shumei->id,
+            'name' => 'Website Localization Project',
+            'source_language' => 'English',
+            'target_language' => 'Japanese',
+            'status' => 'not_started',
+            'deadline' => now()->addDays(10),
+            'instructions' => 'Translate all UI components and pages for the Japanese market.',
+        ]);
+
+        Project::create([
+            'tenant_id' => $tenant2->id,
+            'client_id' => $client2->id,
+            'created_by' => $ritsuka->id,
+            'name' => 'Comic Translation',
+            'source_language' => 'Japanese',
+            'target_language' => 'English',
+            'status' => 'in_progress',
+            'deadline' => now()->addDays(15),
+            'instructions' => 'Maintain original tone and character personality. Target audience is teens.',
+        ]);
+
+        Project::create([
+            'tenant_id' => $tenant3->id,
+            'client_id' => $client2->id,
+            'created_by' => $mafuyu->id,
+            'name' => 'Marketing Copy Transcreation',
+            'source_language' => 'English',
+            'target_language' => 'French',
+            'status' => 'delivered',
+            'deadline' => now()->addDays(20),
+            'instructions' => 'Adapt tone to French Canadian culture. Focus on persuasive language.',
         ]);
     }
 }

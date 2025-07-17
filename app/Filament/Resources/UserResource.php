@@ -13,6 +13,8 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Models\Tenant;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 
 
 class UserResource extends Resource
@@ -39,7 +41,9 @@ class UserResource extends Resource
                     ->required(fn (string $context): bool => $context === 'create')
                     ->dehydrateStateUsing(fn ($state) => \Hash::make($state))
                     ->label('Password')
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->visibleOn('create', 'edit') // Optional, hides on view
+                    ->dehydrated(fn ($state) => filled($state)), // Don't update if left blank
                 Forms\Components\Select::make('role')
                     ->required()
                     ->options([
@@ -54,11 +58,11 @@ class UserResource extends Resource
                     ->placeholder('Add language pairs like EN→ES')
                     ->label('Language Pairs')
                     ->suggestions(['EN→ES', 'ES→EN', 'EN→FR', 'FR→EN']),
-                Forms\Components\Select::make('status')
+                Forms\Components\Select::make('availability_status')
                     ->required()
                     ->options([
-                        'active' => 'Active',
-                        'inactive' => 'Inactive',
+                        'available' => 'Available',
+                        'unavailable' => 'Unavailable',
                     ]),
                        
             ]);
@@ -73,14 +77,40 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('email')
                 ->sortable(),
                 Tables\Columns\TextColumn::make('role')
+                ->badge()
+                ->colors([
+                    'admin' => 'primary',
+                    'translator' => 'info',
+                    'editor' => 'warning',
+                    'interpreter' => 'success',
+                    'proofreader' => 'secondary',
+                    'project_manager' => 'danger',
+                ])
                 ->sortable(),
                 Tables\Columns\TextColumn::make('language_pairs')
-                    ->label('Language Pairs')
-                    ->formatStateUsing(fn ($state) => implode(', ', $state)),
+                ->label('Language Pairs')
+                ->formatStateUsing(function ($state) {
+                    // Handle null or malformed state
+                    if (is_array($state)) {
+                        return implode(', ', $state);
+                    }
 
+                    // In case state is a JSON string (rare but possible)
+                    if (is_string($state)) {
+                        $decoded = json_decode($state, true);
+                        return is_array($decoded) ? implode(', ', $decoded) : $state;
+                    }
+
+                    return $state;
+                }),
                 Tables\Columns\TextColumn::make('availability_status')
-                    ->label('Availability Status')
-                    ->formatStateUsing(fn ($state) => $state ? 'Available' : 'Unavailable')
+                    ->label('Status')
+                    ->badge()
+                    ->colors([
+                        'available' => 'success',
+                        'unavailable' => 'danger',
+                    ])
+                    ->formatStateUsing(fn ($state) => $state === 'available' ? 'Available' : 'Unavailable')
                     ->sortable(),
             ])
             ->filters([
@@ -97,8 +127,8 @@ class UserResource extends Resource
                 Tables\Filters\SelectFilter::make('status')
                     ->label('Status')
                     ->options([
-                        'active' => 'Active',
-                        'inactive' => 'Inactive',
+                        'available' => 'Available',
+                        'unavailable' => 'Unavailable',
                     ]),
             ])
             ->actions([

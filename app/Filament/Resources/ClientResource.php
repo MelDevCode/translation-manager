@@ -56,6 +56,7 @@ class ClientResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -75,8 +76,8 @@ class ClientResource extends Resource
     {
         return [
             'index' => Pages\ListClients::route('/'),
-            'create' => Pages\CreateClient::route('/create'),
-            'edit' => Pages\EditClient::route('/{record}/edit'),
+            //'create' => Pages\CreateClient::route('/create'),
+            //'edit' => Pages\EditClient::route('/{record}/edit'),
         ];
     }
 }

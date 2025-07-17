@@ -23,7 +23,8 @@ class User extends Authenticatable implements FilamentUser, HasTenants
         'email',
         'password',
         'role',
-        'status'
+        'language_pairs',
+        'availability_status'
     ];
  
     protected $hidden = [
@@ -36,7 +37,13 @@ class User extends Authenticatable implements FilamentUser, HasTenants
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'language_pairs' => 'array',
         ];
+    }
+
+    public function project()
+    {
+        return $this->hasMany(Project::class, 'created_by');
     }
 
     public function tenants() {

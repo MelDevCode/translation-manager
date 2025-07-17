@@ -45,6 +45,11 @@ class User extends Authenticatable implements FilamentUser, HasTenants
     {
         return $this->hasMany(Project::class, 'created_by');
     }
+
+    public function assignments()
+    {
+        return $this->hasMany(Assignment::class);
+    }
     
     public function tenants() {
         return $this->belongsToMany(Tenant::class);

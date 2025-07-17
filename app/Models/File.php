@@ -34,4 +34,9 @@ class File extends Model
     {
         return $this->belongsTo(User::class, 'uploaded_by');
     }
+
+    public function assignments()
+    {
+        return $this->hasMany(Assignment::class);
+    }
 }

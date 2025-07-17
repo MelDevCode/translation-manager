@@ -17,7 +17,9 @@ class ProjectResource extends Resource
 {
     protected static ?string $model = Project::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-folder';
+
+    protected static ?string $navigationGroup = 'Project Management';
 
     public static function form(Form $form): Form
     {
@@ -76,14 +78,12 @@ class ProjectResource extends Resource
                     'cancelled' => 'danger',
                 ]),
                 Tables\Columns\TextColumn::make('source_language')
-                    ->label('Source Language'),
+                    ->label('Source'),
                 Tables\Columns\TextColumn::make('target_language')
-                    ->label('Target Language'),
+                    ->label('Target'),
                 Tables\Columns\TextColumn::make('deadline')
                     ->date()
                     ->label('Deadline'),
-                Tables\Columns\TextColumn::make('instructions')
-                    ->label('Instructions'),
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Created By'),
             ])
@@ -93,6 +93,7 @@ class ProjectResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

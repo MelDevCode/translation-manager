@@ -47,6 +47,11 @@ class Project extends Model
         return $this->belongsToMany(Glossary::class, 'glossary_project');
     }
 
+    public function assignments()
+    {
+        return $this->hasMany(Assignment::class);
+    }
+
     protected static function booted(): void
     {
         static::addGlobalScope('tenant', function (Builder $query) {

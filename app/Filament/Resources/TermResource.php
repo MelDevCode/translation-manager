@@ -17,7 +17,9 @@ class TermResource extends Resource
 {
     protected static ?string $model = Term::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-bookmark';
+
+    protected static ?string $navigationGroup = 'Language Resources';
 
     public static function form(Form $form): Form
     {
@@ -90,8 +92,6 @@ class TermResource extends Resource
                     ->badge(),
                 Tables\Columns\TextColumn::make('domain')
                     ->badge(),
-                Tables\Columns\TextColumn::make('context')
-                    ->badge(),
                 Tables\Columns\TextColumn::make('user.name')->label('Created By'),
             ])
             ->filters([
@@ -134,6 +134,7 @@ class TermResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
